@@ -1,7 +1,5 @@
 /* style.css */
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -9,87 +7,93 @@ body {
     background-color: #F9FBFD;
     height: 100vh;
     display: flex;
-    flex-direction: column; /* Forces Header to be Top, Editor to be Bottom */
-    overflow: hidden; /* Stops double scrollbars */
+    flex-direction: column;
+    overflow: hidden;
 }
 
-/* 1. HEADER (The Top Bar) */
+/* --- HEADER --- */
 .header {
     background: white;
-    height: 60px; /* Fixed height */
+    height: 60px;
     padding: 0 20px;
-    border-bottom: 2px solid #ddd; /* Thicker line to separate */
+    border-bottom: 1px solid #dadce0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0; /* Prevents squashing */
-    z-index: 1000; /* FORCE THIS TO BE ON TOP OF EVERYTHING */
-    position: relative;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Adds a shadow so you can see it clearly */
+    flex-shrink: 0;
+    z-index: 20;
 }
 
-.status {
-    font-size: 14px;
-    color: #5f6368;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.user-badge {
+    background: #e8f0fe; color: #1967d2;
+    padding: 6px 14px; border-radius: 16px;
+    font-size: 13px; font-weight: 600;
 }
 
-#user-count {
-    background-color: #e8f0fe;
-    color: #1967d2;
-    padding: 6px 12px;
-    border-radius: 16px;
-    font-weight: bold;
-    font-size: 13px;
-    min-width: 80px;
-    text-align: center;
-    display: block; /* Ensures it renders as a box */
-}
-
-/* 2. MAIN CONTAINER */
-.container {
+/* --- APP LAYOUT (Centers Everything) --- */
+.app-container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    overflow-y: auto; /* Allow ONLY the paper area to scroll */
+    align-items: center; /* <--- CRITICAL: Centers Toolbar & Paper */
+    overflow: hidden;
+    position: relative;
     width: 100%;
-    padding-bottom: 50px;
-    z-index: 1; /* Lower than header */
 }
 
-/* 3. QUILL TOOLBAR */
-.ql-toolbar.ql-snow {
+/* --- TOOLBAR --- */
+#toolbar-container {
     background: #edf2fa;
-    border: none !important;
+    width: 816px; /* Match Paper Width exactly for perfect alignment */
+    max-width: 95%;
+    margin-top: 15px;
+    padding: 8px 15px;
     border-radius: 25px;
-    padding: 8px 15px !important;
-    margin: 20px 0;
-    width: 800px;
-    max-width: 90%;
     display: flex;
     justify-content: center;
-    position: sticky; /* Sticks to top when scrolling */
-    top: 10px;
-    z-index: 100; /* Higher than paper, lower than header */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    flex-shrink: 0;
 }
 
-/* 4. THE PAPER */
+/* Toolbar Buttons */
+#toolbar-container button {
+    background: transparent; border: none; cursor: pointer;
+    color: #444746; padding: 4px; border-radius: 4px;
+    transition: all 0.2s; width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+}
+#toolbar-container button:hover { background-color: rgba(0,0,0,0.06); color: #000; }
+#toolbar-container button.ql-active { background-color: #d3e3fd; color: #0b57d0; }
+#toolbar-container i { font-size: 15px; }
+
+/* Separators */
+.separator { width: 1px; height: 20px; background: #c7c7c7; margin: 0 5px; }
+.ql-picker { color: #444746; }
+
+/* --- EDITOR WRAPPER (Scrollable Area) --- */
+#editor-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;    /* Center the paper horizontally */
+    padding: 20px 0 100px 0;
+    scroll-behavior: smooth;
+}
+
+/* --- THE WHITE PAPER --- */
 #editor-container {
     background: white;
-    width: 800px;
-    min-height: 1000px;
-    padding: 60px;
+    width: 816px; /* A4 Width */
+    min-height: 1056px; /* A4 Height */
+    padding: 70px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    border: none !important;
-    font-size: 12pt;
-    color: #000;
-}
-
-/* 5. Custom File Button Style */
-.ql-file {
-    font-weight: bold;
-    font-size: 18px; /* Make the paperclip bigger */
+    border: 1px solid #dadce0 !important;
+    font-size: 11pt; color: #000;
+    margin-bottom: 50px;
 }
